@@ -109,7 +109,7 @@ jobs:
           password: ${{ secrets.ELLIE_MINI_SECRET }}
         run: |
           mkdir -p depends/
-          ls
+          ls -alhR
           cp -R ./*.tar.xz depends/
           cp -R ./libgl4es_114.dylib Natives/resources/Frameworks/libgl4es_114.dylib
           export PATH=/opt/procursus/bin:/opt/homebrew/bin:$PATH
