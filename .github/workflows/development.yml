@@ -46,7 +46,7 @@ jobs:
             -DNOX11=ON -DNOEGL=OFF -DSTATICLIB=OFF -DPLATFORM=OS64 \
             -DCMAKE_C_FLAGS=-Wno-error=implicit-function-declaration
           cmake --build build --config RelWithDebInfo --target GL
-          cp -R lib/libGL.dylib /Users/eilionoir/actions/prerequisites/libgl4es_114.dylib
+          cp -R lib/libGL.dylib ./libgl4es_114.dylib
 
       - name: Get JRE8
         uses: dawidd6/action-download-artifact@v2
@@ -109,12 +109,12 @@ jobs:
           password: ${{ secrets.ELLIE_MINI_SECRET }}
         run: |
           mkdir -p depends/
-          cp -R /Users/eilionoir/actions/prerequisites/*.tar.xz depends/
-          cp -R /Users/eilionoir/actions/prerequisites/libgl4es_114.dylib Natives/resources/Frameworks/libgl4es_114.dylib
+          cp -R ./*.tar.xz depends/
+          cp -R ./libgl4es_114.dylib Natives/resources/Frameworks/libgl4es_114.dylib
           export PATH=/opt/procursus/bin:/opt/homebrew/bin:$PATH
           export NOSTDIN=1 SUDOPASS=$password RUNNER=1 SLIMMED=1
           gmake -j$(sysctl -n hw.ncpu) dsym PLATFORM=${{ matrix.platform }}
-          cp -R artifacts/PojavLauncher.dSYM /Users/eilionoir/actions/prerequisites/PojavLauncher.dSYM.${{ matrix.platform_name }}
+          cp -R artifacts/PojavLauncher.dSYM ./PojavLauncher.dSYM.${{ matrix.platform_name }}
 
       - name: Upload regular ipa
         uses: actions/upload-artifact@v2
@@ -131,7 +131,7 @@ jobs:
   update-gl4es:
     name: Update GL4ES
     needs: build
-    runs-on: MacStadium-prerequisite
+    runs-on: macos-latest
     steps:
       - name: Get gl4es latest commit hash
         id: gl4es-sha
@@ -153,7 +153,7 @@ jobs:
         if: github.event != 'pull_request' && github.ref_name == 'main' && steps.gl4eslibs-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         run: |
-          cp -R /Users/eilionoir/actions/prerequisites/libgl4es_114.dylib Natives/resources/Frameworks/libgl4es_114.dylib
+          cp -R ./libgl4es_114.dylib Natives/resources/Frameworks/libgl4es_114.dylib
           git add Natives/resources/Frameworks/libgl4es_114.dylib
           git commit -am "CI: Update gl4es"
           git push
@@ -163,4 +163,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: PojavLauncher.dSYM
-          path: /Users/eilionoir/actions/prerequisites/PojavLauncher.dSYM.ios
+          path: ./PojavLauncher.dSYM.ios
