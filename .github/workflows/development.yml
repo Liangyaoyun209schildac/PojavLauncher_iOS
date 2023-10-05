@@ -53,7 +53,7 @@ jobs:
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: build.yml
-          path: /Users/eilionoir/actions/prerequisites
+          path: ./
           workflow_conclusion: success
           repo: PojavLauncherTeam/android-openjdk-build-multiarch
           branch: jre8-ios-jitjailed
@@ -64,7 +64,7 @@ jobs:
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: build.yml
-          path: /Users/eilionoir/actions/prerequisites
+          path: ./
           workflow_conclusion: success
           repo: PojavLauncherTeam/android-openjdk-build-multiarch
           branch: buildjre17
