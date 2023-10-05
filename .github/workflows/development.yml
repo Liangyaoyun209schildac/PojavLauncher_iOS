@@ -12,7 +12,7 @@ on:
 jobs:
   deps:
     name: Get dependencies
-    runs-on: MacStadium-prerequisite
+    runs-on: macos-latest
     steps:
       - name: Get gl4es latest commit hash
         id: gl4es-sha
